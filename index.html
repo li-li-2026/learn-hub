@@ -10,14 +10,19 @@
   <aside class="sidebar" id="sidebar">
     <header class="sidebar-header">
       <h1>创作工作台</h1>
-      <p>完成一项打勾，进度一目了然</p>
+      <p>9 大模块 · 每日打卡 · 视频学习</p>
     </header>
     <nav class="nav" id="nav" aria-label="模块导航"></nav>
   </aside>
 
   <main class="content" id="content">
+    <header class="content-header">
+      <h2 id="module-title">模块</h2>
+      <p id="module-subtitle" class="muted"></p>
+    </header>
+
     <section class="task-section">
-      <h2 class="section-title">📋 今日任务清单</h2>
+      <h3 class="section-title">📋 今日任务清单</h3>
       <ul class="task-list" id="task-list" aria-label="任务清单"></ul>
       <form class="add-task-form" id="add-task-form">
         <input type="text" id="task-input" placeholder="新增一个今日任务..." maxlength="50" required />
@@ -26,9 +31,9 @@
       <p class="task-progress" id="task-progress"></p>
     </section>
 
-    <section class="video-section">
-      <h2 class="section-title">🎬 相关视频 / 知识点</h2>
-      <ul class="video-list" id="video-list" aria-label="视频列表"></ul>
+    <section class="options-section">
+      <h3 class="section-title">🎬 子选项 / 相关视频</h3>
+      <div id="options" class="options-list"></div>
     </section>
   </main>
 
