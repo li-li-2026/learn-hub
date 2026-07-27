@@ -377,7 +377,7 @@ function defaultStore() {
       done: false
     }));
   });
-  return { activeId: modules[0].id, tasksByModule };
+  return { activeId: modules[0].id, tasksByModule, doneDates: {} };
 }
 
 let store = loadStore() || defaultStore();
@@ -390,8 +390,166 @@ modules.forEach((m) => {
     }));
   }
 });
+if (!store.doneDates) store.doneDates = {};
 
 function persist() { saveStore(store); }
+
+// ---------- 日历 ----------
+
+function recordDoneDate() {
+  const today = new Date().toISOString().slice(0, 10);
+  if (!store.doneDates[today]) {
+    store.doneDates[today] = {};
+  }
+  const modId = store.activeId;
+  store.doneDates[today][modId] = (store.doneDates[today][modId] || 0) + 1;
+  persist();
+}
+
+function getDoneDatesForMonth(year, month) {
+  const result = {};
+  Object.keys(store.doneDates).forEach((date) => {
+    const [y, m] = date.split('-');
+    if (+y === year && +m === month) {
+      result[date] = store.doneDates[date];
+    }
+  });
+  return result;
+}
+
+function renderCalendar() {
+  const cal = document.getElementById('calendar');
+  if (!cal) return;
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const today = now.toISOString().slice(0, 10);
+
+  const doneDates = getDoneDatesForMonth(year, month);
+  const firstDay = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(year, month, 0).getDate();
+
+  const weekHeaders = ['日', '一', '二', '三', '四', '五', '六'];
+
+  let html = `<div class="cal-header">`;
+  html += `<button class="cal-nav" id="cal-prev">‹</button>`;
+  html += `<span class="cal-month">${year}年 ${month}月</span>`;
+  html += `<button class="cal-nav" id="cal-next">›</button>`;
+  html += `</div>`;
+  html += `<div class="cal-weekdays">${weekHeaders.map((d) => `<span>${d}</span>`).join('')}</div>`;
+  html += `<div class="cal-grid">`;
+
+  for (let i = 0; i < firstDay; i++) {
+    html += `<span class="cal-cell empty"></span>`;
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const isToday = ds === today;
+    const hasDone = doneDates[ds];
+    let cls = 'cal-cell';
+    if (isToday) cls += ' today';
+    if (hasDone) cls += ' has-done';
+
+    html += `<span class="${cls}" data-date="${ds}">`;
+    html += `<span class="cal-day">${d}</span>`;
+    if (hasDone) {
+      html += `<span class="cal-dot">✓</span>`;
+    }
+    html += `</span>`;
+  }
+
+  html += `</div>`;
+
+  // 图例
+  const activeDoneCount = Object.values(doneDates).reduce((sum, mods) => {
+    const cnt = mods[store.activeId] || 0;
+    return sum + cnt;
+  }, 0);
+  html += `<div class="cal-legend">`;
+  html += `当前模块本月完成 <strong>${activeDoneCount}</strong> 个任务`;
+  html += `</div>`;
+
+  cal.innerHTML = html;
+
+  // 切换月份
+  cal.querySelector('#cal-prev').addEventListener('click', () => {
+    cal.dataset.year = year;
+    cal.dataset.month = month - 1;
+    renderCalendarAt(+cal.dataset.year, +cal.dataset.month);
+  });
+  cal.querySelector('#cal-next').addEventListener('click', () => {
+    cal.dataset.year = year;
+    cal.dataset.month = month + 1;
+    renderCalendarAt(+cal.dataset.year, +cal.dataset.month);
+  });
+}
+
+function renderCalendarAt(year, month) {
+  const cal = document.getElementById('calendar');
+  if (!cal) return;
+  if (month < 1) { year--; month = 12; }
+  if (month > 12) { year++; month = 1; }
+
+  const now = new Date();
+  const today = now.toISOString().slice(0, 10);
+
+  const doneDates = getDoneDatesForMonth(year, month);
+  const firstDay = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(year, month, 0).getDate();
+
+  const weekHeaders = ['日', '一', '二', '三', '四', '五', '六'];
+
+  let html = `<div class="cal-header">`;
+  html += `<button class="cal-nav" id="cal-prev">‹</button>`;
+  html += `<span class="cal-month">${year}年 ${month}月</span>`;
+  html += `<button class="cal-nav" id="cal-next">›</button>`;
+  html += `</div>`;
+  html += `<div class="cal-weekdays">${weekHeaders.map((d) => `<span>${d}</span>`).join('')}</div>`;
+  html += `<div class="cal-grid">`;
+
+  for (let i = 0; i < firstDay; i++) {
+    html += `<span class="cal-cell empty"></span>`;
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const isToday = ds === today;
+    const hasDone = doneDates[ds];
+    let cls = 'cal-cell';
+    if (isToday) cls += ' today';
+    if (hasDone) cls += ' has-done';
+
+    html += `<span class="${cls}" data-date="${ds}">`;
+    html += `<span class="cal-day">${d}</span>`;
+    if (hasDone) {
+      html += `<span class="cal-dot">✓</span>`;
+    }
+    html += `</span>`;
+  }
+
+  html += `</div>`;
+
+  const activeDoneCount = Object.values(doneDates).reduce((sum, mods) => {
+    const cnt = mods[store.activeId] || 0;
+    return sum + cnt;
+  }, 0);
+  html += `<div class="cal-legend">`;
+  html += `当前模块本月完成 <strong>${activeDoneCount}</strong> 个任务`;
+  html += `</div>`;
+
+  cal.innerHTML = html;
+
+  cal.querySelector('#cal-prev').addEventListener('click', () => {
+    if (month - 1 < 1) renderCalendarAt(year - 1, 12);
+    else renderCalendarAt(year, month - 1);
+  });
+  cal.querySelector('#cal-next').addEventListener('click', () => {
+    if (month + 1 > 12) renderCalendarAt(year + 1, 1);
+    else renderCalendarAt(year, month + 1);
+  });
+}
 
 // ---------- 渲染 ----------
 
@@ -427,6 +585,7 @@ function renderContent() {
   document.getElementById("module-subtitle").textContent = mod.subtitle;
   renderTasks();
   renderOptions();
+  renderCalendar();
 }
 
 function renderTasks() {
@@ -458,9 +617,15 @@ function bindTaskEvents() {
       const tasks = store.tasksByModule[store.activeId];
       const t = tasks.find((x) => x.id === id);
       if (!t) return;
+      const wasDone = t.done;
       t.done = !t.done;
+      // 从"未完成"变成"已完成"时才记录日期
+      if (!wasDone && t.done) {
+        recordDoneDate();
+      }
       persist();
       renderTasks();
+      renderCalendar();
     };
     check.addEventListener("click", onToggle);
     check.addEventListener("keydown", (e) => {
