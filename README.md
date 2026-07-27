@@ -1,45 +1,54 @@
-# 创作工作台
+# 创作工作台 v2
 
-一个移动端风格的学习资源导航页。界面按分组展示模块卡片，点击卡片即可展开相关学习视频链接。
+一个左侧模块导航 + 右侧任务清单 + 视频知识点的纯前端工作台。
+任务清单支持 **勾选 / 新增 / 删除**，并使用 `localStorage` **持久化**保存。
 
-## 在线预览
+## 界面预览
 
-用浏览器直接打开 `index.html` 即可；也可部署到 GitHub Pages 等静态托管服务。
+- 左侧：📅 每日计划 / 💡 选题每日灵感 / 🔥 爆款热点视频 / 二创 / 🌱 个人成长计划
+- 右侧：
+  - 今日任务清单（可勾选、新增、删除，进度自动统计）
+  - 相关视频 / 知识点（标题、平台、知识点提示、跳转链接）
 
-## 仓库结构
+## 使用
+
+```bash
+# 直接用浏览器打开 index.html 即可
+open index.html   # macOS
+start index.html  # Windows
+```
+
+或部署到任意静态托管（GitHub Pages / Vercel / Netlify 等）。
+
+## 数据存储
+
+- `localStorage` 的 key：`create-workbench-v2`
+- 存储内容：当前模块 id、各模块的自定义任务（含完成状态）
+- 清空数据：在浏览器控制台执行 `localStorage.removeItem('create-workbench-v2')`，刷新页面即恢复默认。
+
+## 二次开发
+
+- 模块、默认任务、视频列表全部定义在 `app.js` 顶部的 `modules` 数组中。
+- 想要新增模块：往数组里 push 一个对象即可：
+  ```js
+  {
+    id: "reading",
+    icon: "📖",
+    title: "每日阅读",
+    subtitle: "读书 · 笔记",
+    defaultTasks: ["读 30 分钟", "做 3 条笔记"],
+    videos: [{ title: "...", platform: "Bilibili", tip: "...", url: "..." }]
+  }
+  ```
+- 样式集中在 `styles.css`，主题色在 `:root` 的 CSS 变量中。
+
+## 文件结构
 
 ```
 learn-hub/
-├── index.html    # 主页面
-├── styles.css    # 移动端风格样式
-├── app.js        # 分组、模块数据与交互逻辑
-├── README.md     # 说明文档
+├── index.html     # 页面骨架
+├── styles.css     # 样式
+├── app.js         # 数据 + 渲染 + 交互
+├── README.md
 └── .gitignore
 ```
-
-## 当前分组
-
-- 📌 今日任务：每日打卡计划
-- 📚 学习成长：Hiphop 舞蹈自学、电吉他自学进度
-- 💡 内容创作：短视频选题灵感
-- 🧘 生活记录：体态矫正记录、情绪备忘录、好物选购对比
-
-## 如何添加/修改内容
-
-编辑 `app.js` 中的 `groups` 数组，按以下格式增减模块或视频：
-
-```js
-{
-  id: "unique-id",
-  icon: "🚀",
-  title: "模块名称",
-  description: "副标题说明",
-  videos: [
-    { title: "视频标题", platform: "Bilibili", url: "https://www.bilibili.com/video/xxx" }
-  ]
-}
-```
-
-## 说明
-
-当前视频链接使用搜索链接作为示例，后续可替换为真实收藏的视频地址。
