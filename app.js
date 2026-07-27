@@ -1,34 +1,46 @@
 // 左侧 4 大模块 + 每个模块的子任务、视频、知识点
+// 原 10 个任务（每日打卡 / 健身训练 / 体态矫正 / 英语口语 / 运营学习
+// / 短视频选题 / HipHop 舞蹈 / 电吉他 / 每日金融小知识 / 好物选购与情绪记录）
+// 已全部揉和到下列四大类中。
 
 const modules = [
   {
     id: "daily-plan",
     icon: "📅",
     title: "每日计划",
-    subtitle: "打卡 · 体态 · 复盘",
+    subtitle: "打卡 · 体态 · 情绪 · 选购",
+    // 揉和：每日打卡 / 体态矫正专区 / 情绪备忘录 / 好物选购
     defaultTasks: [
-      "完成今日 4 个学习任务",
-      "记录体态状态（高低肩 / 腰酸）",
-      "复盘昨日完成情况"
+      "完成今日 4 大类学习任务打卡",
+      "体态矫正训练（高低肩 / 脊柱侧弯 / O 型腿 / 足弓）",
+      "记录今日情绪与人际复盘",
+      "对比 1 件待购物品（吉他 / 课程 / 日用品）",
+      "复盘昨日完成情况，调整明日计划"
     ],
     videos: [
       {
-        title: "30 天每日计划如何坚持",
+        title: "30 天每日打卡习惯养成法",
         platform: "Bilibili",
-        tip: "如何拆解目标、每天打勾",
-        url: "https://search.bilibili.com/all?keyword=30天每日计划坚持"
+        tip: "每日打卡 · 如何拆解目标、每天打勾",
+        url: "https://search.bilibili.com/all?keyword=30天每日打卡习惯"
       },
       {
-        title: "高效晨间计划与每日复盘",
+        title: "体态矫正专区｜高低肩 / 脊柱侧弯 / O 型腿 / 足弓",
         platform: "Bilibili",
-        tip: "提升专注力 + 时间管理",
-        url: "https://search.bilibili.com/all?keyword=晨间计划每日复盘"
+        tip: "体态矫正 · 21 天打卡训练",
+        url: "https://search.bilibili.com/all?keyword=体态矫正高低肩脊柱侧弯O型腿足弓"
       },
       {
-        title: "体态矫正 21 天打卡",
+        title: "情绪管理与日记复盘技巧",
         platform: "Bilibili",
-        tip: "高低肩 / 骨盆前倾 / 足弓",
-        url: "https://search.bilibili.com/all?keyword=体态矫正21天打卡"
+        tip: "情绪记录 · 人际避雷与边界感",
+        url: "https://search.bilibili.com/all?keyword=情绪管理日记复盘"
+      },
+      {
+        title: "理性消费与好物比价思维",
+        platform: "Bilibili",
+        tip: "好物选购 · 比价与消费决策",
+        url: "https://search.bilibili.com/all?keyword=理性消费好物比价"
       }
     ]
   },
@@ -37,35 +49,44 @@ const modules = [
     icon: "💡",
     title: "选题每日灵感",
     subtitle: "选题 · 文案 · 运营",
+    // 揉和：短视频选题 / 运营学习
     defaultTasks: [
-      "抓取 3 条今日热点",
-      "筛选 1 条可二创的选题",
-      "写出 3 条标题候选"
+      "抓取 3 条今日热点（抖音 / 小红书 / B 站）",
+      "筛选 1 条可二创的短视频选题",
+      "写出 3 条标题候选与钩子文案",
+      "复盘昨日作品数据，调整选题方向",
+      "学习 1 条新媒体运营知识点"
     ],
     videos: [
       {
         title: "短视频爆款选题方法论",
         platform: "Bilibili",
-        tip: "选题的 4 大核心原则",
+        tip: "短视频选题 · 4 大核心原则",
         url: "https://search.bilibili.com/all?keyword=短视频爆款选题方法论"
       },
       {
-        title: "文案公式与爆款结构",
+        title: "爆款文案公式与结构拆解",
         platform: "Bilibili",
-        tip: "钩子 + 痛点 + 价值",
+        tip: "文案复盘 · 钩子 + 痛点 + 价值",
         url: "https://search.bilibili.com/all?keyword=爆款文案公式结构"
       },
       {
-        title: "用户心理与情绪文案",
+        title: "用户心理与情绪文案写作",
         platform: "Bilibili",
-        tip: "如何戳中用户情绪",
+        tip: "运营学习 · 如何戳中用户情绪",
         url: "https://search.bilibili.com/all?keyword=用户心理情绪文案"
       },
       {
         title: "新媒体运营入门到精通",
         platform: "Bilibili",
-        tip: "选题 / 排版 / 数据复盘",
-        url: "https://search.bilibili.com/all?keyword=新媒体运营入门"
+        tip: "运营学习 · 选题 / 排版 / 数据复盘",
+        url: "https://search.bilibili.com/all?keyword=新媒体运营入门到精通"
+      },
+      {
+        title: "热点追踪与抖音选题灵感",
+        platform: "抖音",
+        tip: "短视频选题 · 热门 BGM / 模板",
+        url: "https://www.douyin.com/search/%E7%9F%AD%E8%A7%86%E9%A2%91%E9%80%89%E9%A2%98"
       }
     ]
   },
@@ -74,35 +95,44 @@ const modules = [
     icon: "🔥",
     title: "爆款热点视频 / 二创",
     subtitle: "拆解 · 二次创作",
+    // 揉和：短视频选题（爆款拆解）/ HipHop 二创 / 电吉他二创
     defaultTasks: [
-      "拆解 1 条本周热门视频",
-      "找出可二创的爆点结构",
-      "完成 1 条二创脚本"
+      "拆解 1 条本周热门视频（3 秒钩子 / 情绪曲线 / 结尾反转）",
+      "找出可二创的爆点结构与 BGM",
+      "用 HipHop / 电吉他素材完成 1 条二创脚本",
+      "检查二创版权合规与原创度",
+      "发布并追踪数据复盘"
     ],
     videos: [
       {
         title: "如何拆解爆款视频结构",
         platform: "Bilibili",
-        tip: "3 秒钩子 / 情绪曲线 / 结尾反转",
+        tip: "爆款拆解 · 3 秒钩子 / 情绪曲线 / 结尾反转",
         url: "https://search.bilibili.com/all?keyword=拆解爆款视频结构"
       },
       {
-        title: "二创视频的合规与爆点",
+        title: "二创视频的合规与爆点技巧",
         platform: "Bilibili",
-        tip: "如何避开版权 + 制造共鸣",
+        tip: "二创 · 避开版权 + 制造共鸣",
         url: "https://search.bilibili.com/all?keyword=二创视频技巧爆点"
       },
       {
-        title: "用 Hiphop / 吉他做二创内容",
+        title: "用 Hiphop 舞蹈做二创内容",
         platform: "Bilibili",
-        tip: "音乐 + 视觉双爆点",
-        url: "https://search.bilibili.com/all?keyword=二创音乐视频"
+        tip: "HipHop 二创 · 音乐 + 视觉双爆点",
+        url: "https://search.bilibili.com/all?keyword=HipHop舞蹈二创视频"
       },
       {
-        title: "抖音热点追踪与复盘",
+        title: "电吉他翻奏与二创剪辑",
+        platform: "Bilibili",
+        tip: "电吉他二创 · 翻奏 + 节奏卡点",
+        url: "https://search.bilibili.com/all?keyword=电吉他翻奏二创剪辑"
+      },
+      {
+        title: "抖音热点追踪与爆款复盘",
         platform: "抖音",
-        tip: "热门 BGM / 模板 / 文案",
-        url: "https://www.douyin.com/search/%E7%88%86%E6%AC%BE%E9%80%89%E9%A2%98"
+        tip: "爆款热点 · 热门 BGM / 模板 / 文案",
+        url: "https://www.douyin.com/search/%E7%88%86%E6%AC%BE%E7%83%AD%E7%82%B9"
       }
     ]
   },
@@ -111,42 +141,50 @@ const modules = [
     icon: "🌱",
     title: "个人成长计划",
     subtitle: "舞蹈 · 吉他 · 口语 · 健身 · 金融",
+    // 揉和：HipHop 舞蹈 / 电吉他 / 英语口语 / 健身训练 / 每日金融小知识
     defaultTasks: [
-      "舞蹈 / 吉他 各练习 20 分钟",
-      "英语影子跟读 10 分钟",
-      "健身 / 体态训练 30 分钟",
-      "看 1 条金融 / 个人成长视频"
+      "HipHop 舞蹈练习 20 分钟（基础律动 + 动作纠错）",
+      "电吉他练习 20 分钟（入门知识 + 乐谱 + 配件）",
+      "英语口语影子跟读 10 分钟",
+      "健身训练 30 分钟（胸 / 背 / 腿 / 肩 / 核心）",
+      "看 1 条每日金融小知识视频"
     ],
     videos: [
       {
         title: "HipHop 基础律动 30 天计划",
         platform: "Bilibili",
-        tip: "0 基础入门三阶段",
+        tip: "HipHop 舞蹈 · 0 基础入门三阶段",
         url: "https://search.bilibili.com/all?keyword=HipHop基础律动30天"
+      },
+      {
+        title: "街舞动作纠错与细节分析",
+        platform: "Bilibili",
+        tip: "HipHop 舞蹈 · 周训练计划 + 纠错笔记",
+        url: "https://search.bilibili.com/all?keyword=街舞动作纠错"
       },
       {
         title: "电吉他零基础系统入门",
         platform: "Bilibili",
-        tip: "入门知识 + 乐谱 + 配件",
+        tip: "电吉他 · 入门知识 + 乐谱 + 配件",
         url: "https://search.bilibili.com/all?keyword=电吉他零基础系统入门"
       },
       {
-        title: "每日英语口语影子跟读",
+        title: "每日英语口语影子跟读 Shadowing",
         platform: "YouTube",
-        tip: "Shadowing 听说同步训练",
+        tip: "英语口语 · 听说同步训练",
         url: "https://www.youtube.com/results?search_query=shadowing+english+speaking"
       },
       {
         title: "全身燃脂训练（无器械）",
         platform: "Bilibili",
-        tip: "胸背腿肩 / 核心训练",
-        url: "https://search.bilibili.com/all?keyword=全身燃脂训练"
+        tip: "健身训练 · 胸背腿肩 / 核心训练",
+        url: "https://search.bilibili.com/all?keyword=全身燃脂训练无器械"
       },
       {
-        title: "股票 / 基金 / 宏观入门",
+        title: "每日金融小知识｜股票 / 基金 / 宏观入门",
         platform: "Bilibili",
-        tip: "实战派金融小知识",
-        url: "https://search.bilibili.com/all?keyword=股票基金入门"
+        tip: "每日金融小知识 · 实战派理财",
+        url: "https://search.bilibili.com/all?keyword=每日金融小知识股票基金"
       }
     ]
   }
