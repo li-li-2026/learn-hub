@@ -252,9 +252,15 @@ body {
 }
 
 @media (max-width: 768px) {
-  body { grid-template-columns: 1fr; }
-  .sidebar { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-  .nav { flex-direction: row; overflow-x: auto; padding-bottom: 4px; }
-  .nav-item { white-space: nowrap; flex-shrink: 0; }
-  .content { padding: 18px 14px; }
+  body { grid-template-columns: 200px 1fr; }
+  .sidebar {
+    position: sticky; height: 100vh;
+    border-right: 1px solid var(--border);
+    border-bottom: none;
+    padding: 16px 10px;
+  }
+  .sidebar-header h1 { font-size: 1rem; }
+  .nav { flex-direction: column; gap: 3px; }
+  .nav-item { font-size: 0.82rem; padding: 8px 10px; white-space: nowrap; }
+  .content { padding: 16px 12px; }
 }
